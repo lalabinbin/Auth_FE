@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axios from "axios";
 
 const apiInstance = axios.create({
-    baseURL: "https://api-authentication-l67h.onrender.com/api",
-    withCredentials: true,
-})
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
 
 //Tự động gắn Access Token vào Header trước khi gửi request
 apiInstance.interceptors.request.use((config) => {
@@ -44,5 +44,4 @@ apiInstance.interceptors.response.use(
   }
 );
 
-
-export default apiInstance
+export default apiInstance;

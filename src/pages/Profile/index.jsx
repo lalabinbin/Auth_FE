@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { getProfile, logout } from "@/service/api/auth";
 import toast from "react-hot-toast";
 
-const Profile = () => {
+const 
+Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",

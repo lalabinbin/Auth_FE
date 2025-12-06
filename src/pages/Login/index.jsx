@@ -11,7 +11,7 @@ export function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (!email || !password) {
       toast.error("Vui lòng nhập đầy đủ thông tin");
       return;
@@ -25,7 +25,7 @@ export function Login() {
         localStorage.setItem("accessToken", accessToken);
       }
       toast.success("Login success");
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.log("Login error:", error.response?.data || error);
       toast.error(
