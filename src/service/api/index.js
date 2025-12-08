@@ -8,7 +8,7 @@ const apiInstance = axios.create({
 //Tự động gắn Access Token vào Header trước khi gửi request
 apiInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
-  if (token) {
+  if (token && !config.url.includes("/auth/refresh-token")) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
@@ -29,7 +29,7 @@ apiInstance.interceptors.response.use(
 
       try {
         const res = await apiInstance.post("/auth/refresh-token");
-        const newAccessToken = res.data?.data?.tokens?.accessToken;
+        const newAccessToken = res.data?.data?.accessToken;
         localStorage.setItem("accessToken", newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return apiInstance(originalRequest);

@@ -12,6 +12,7 @@ export function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     if (!email || !password) {
       toast.error("Vui lòng nhập đầy đủ thông tin");
       return;
@@ -20,21 +21,32 @@ export function Login() {
     try {
       setLoading(true);
       const res = await login({ email, password });
-      const accessToken = res.data?.data?.tokens?.accessToken;
+
+      const accessToken = res.data?.data?.accessToken;
+      const userData = res.data?.data?.user;
+
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken);
       }
-      toast.success("Login success");
-      navigate("/");
+
+      if (userData) {
+        // Lưu thông tin user an toàn
+        localStorage.setItem("user", JSON.stringify(userData));
+        console.log("Saved user:", userData);
+      }
+
+      toast.success("Login thành công");
+      navigate("/profile");
     } catch (error) {
       console.log("Login error:", error.response?.data || error);
       toast.error(
-        error.response?.data?.message || "Đăng nhập thất bại, vui lòng thử lại"
+        error.response?.data?.message || "Đăng nhập thất bại, vui lòng thử lại"
       );
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <LoginForm

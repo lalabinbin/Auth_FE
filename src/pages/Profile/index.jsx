@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getProfile, logout } from "@/service/api/auth";
+import { logout } from "@/service/api/auth";
+import { getProfile } from "@/service/api/user";
 import toast from "react-hot-toast";
 
-const 
-Profile = () => {
+const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
@@ -15,20 +15,19 @@ Profile = () => {
   });
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const res = await getProfile();
-        setUser(res.data?.data || {});
-        toast.success("Lấy thông tin thành công");
-      } catch (error) {
-        console.log(error);
-        toast.error("Lấy thông tin thất bại");
-        navigate("/login");
-      }
-    };
-
     fetchUserProfile();
-  }, [navigate]);
+  }, []);
+  const fetchUserProfile = async () => {
+    try {
+      const res = await getProfile();
+      setUser(res.data?.data || {});
+      toast.success("Lấy thông tin thành công");
+    } catch (error) {
+      console.log(error);
+      toast.error("Lấy thông tin thất bại");
+      navigate("/login");
+    }
+  };
 
   const handleLogout = async () => {
     try {

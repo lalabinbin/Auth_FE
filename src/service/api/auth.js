@@ -12,10 +12,6 @@ export const refreshToken = async () => {
     return await apiInstance.post("/auth/refresh-token");
 }
 
-export const getProfile = async () => {
-    return await apiInstance.get("/auth/me");
-}
-
 export const logout = async () => {
     return await apiInstance.post("/auth/logout");
 }
